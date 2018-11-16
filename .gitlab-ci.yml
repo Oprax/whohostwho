@@ -1,0 +1,12 @@
+image: oprax/python:latest
+
+stages:
+  - deploy
+
+pypi:
+  stage: deploy
+  only:
+   - master
+  before_script:
+   - pipenv install --dev
+  script: make upload
