@@ -6,7 +6,7 @@ from .data_acquisition import DataAcquisition
 
 
 __all__ = ["DataAcquisition", "main", "__version__", "__author__"]
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Oprax <oprax@me.com>"
 
 

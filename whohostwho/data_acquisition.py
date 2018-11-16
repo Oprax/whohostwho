@@ -43,11 +43,17 @@ class DataAcquisition:
         result = str(self.my_reso.query(domain, "TXT")[0])
         info = {"ip": str(ip), "hostname": hostname}
         ipinf = self.IpInfo(*result.strip('"').split(" | "))
+        asns = [int(asn) for asn in ipinf.asn.split(" ")]
+        ipinf = ipinf._replace(asn=asns)
         info.update(ipinf._asdict())
-        asn = ipinf.asn.split(" ")[0]
-        result = str(self.my_reso.query("AS{}.asn.cymru.com.".format(asn), "TXT")[0])
-        asninf = self.AsnInfo(*result.strip('"').split(" | "))
-        info["description"] = asninf.description
+        descriptions = []
+        for asn in asns:
+            result = str(
+                self.my_reso.query("AS{}.asn.cymru.com.".format(asn), "TXT")[0]
+            )
+            asninf = self.AsnInfo(*result.strip('"').split(" | "))
+            descriptions.append(asninf.description)
+        info["descriptions"] = descriptions
         return info
 
     def resolve_ips(self, domain):
