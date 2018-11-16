@@ -10,4 +10,4 @@ install: clean
 
 upload: clean
 	pipenv run python setup.py sdist bdist_wheel
-	pipenv run twine upload src/dist/*
+	pipenv run twine upload dist/*
